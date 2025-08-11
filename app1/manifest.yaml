@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ingress-demo-app1
+  name: app1
   labels: 
     project: ingressController
-    component: app1
+    app: app1
 spec:
   replicas: 2
   selector:
     matchLabels:
       project: ingressController
-      component: app1
+      app: app1
   template:
     metadata:
       labels: 
         project: ingressController
-        component: app1
+        app: app1
     spec:
       containers: 
         - name: app1
@@ -25,14 +25,14 @@ spec:
 apiVersion: v1 
 kind: Service
 metadata: 
-  name: ingress-demo-app1
+  name: app1
   labels: 
     project: ingressController
-    component: app1
+    app: app1
 spec: 
   selector:
     project: ingressController
-    component: app1
+    app: app1
   ports:
     - protocol: TCP
       port: 80
@@ -46,7 +46,7 @@ metadata:
   name: app1
   labels: 
     project: ingressController
-    component: app1
+    app: app1
   annotations:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:741005748171:certificate/b54c68a9-8a8b-4924-9376-8866811912a2
