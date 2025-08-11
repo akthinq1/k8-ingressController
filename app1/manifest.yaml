@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Deployment
 metadata:
-  name: ingressDemoApp1
+  name: ingress-demo-app1
   labels: 
     project: ingressController
     component: app1
@@ -25,7 +25,7 @@ spec:
 apiVersion: v1 
 kind: Service
 metadata: 
-  name: ingressDemoApp1
+  name: ingress-demo-app1
   labels: 
     project: ingressController
     component: app1
