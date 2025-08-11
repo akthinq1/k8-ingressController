@@ -1,24 +1,68 @@
-# deployement, server, ingress
-
-apiVersion: v1 
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ingressDemoApp2
-  labels:
+  name: app2
+  labels: 
     project: ingressController
-    component: app2
+    app: app2
 spec:
   replicas: 2
-  selector: 
-    matchLables:
+  selector:
+    matchLabels:
       project: ingressController
-      component: app2
+      app: app2
   template:
     metadata:
-      labels:
+      labels: 
         project: ingressController
-        component: app2
+        app: app2
     spec:
-      containers:
+      containers: 
         - name: app2
           image: aneelp/app2:v1
+---
+
+apiVersion: v1 
+kind: Service
+metadata: 
+  name: app2
+  labels: 
+    project: ingressController
+    app: app2
+spec: 
+  selector:
+    project: ingressController
+    app: app2
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app2
+  labels: 
+    project: ingressController
+    app: app2
+  annotations:
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:741005748171:certificate/b54c68a9-8a8b-4924-9376-8866811912a2
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    # alb.ingress.kubernetes.io/group.name: joindevops
+spec:
+  ingressClassName: alb
+  rules: 
+    - host: "app2.akdevops.fun"
+      http:
+        paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: app2
+              port:
+                number: 80 # app2 service port 
