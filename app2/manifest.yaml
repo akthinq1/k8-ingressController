@@ -52,7 +52,7 @@ metadata:
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:741005748171:certificate/b54c68a9-8a8b-4924-9376-8866811912a2
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
-    # alb.ingress.kubernetes.io/group.name: joindevops
+    alb.ingress.kubernetes.io/group.name: devops
 spec:
   ingressClassName: alb
   rules: 
